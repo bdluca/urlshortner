@@ -7,3 +7,8 @@ The simplest URL shortening service possible.
 ```bash
 make run
 ```
+
+### Test
+```bash
+make test
+```
