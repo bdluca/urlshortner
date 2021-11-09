@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  urlshortner:
+    image: urlshortner
+    container_name: urlshortner
+    restart: always
+    ports:
+      - "80:8080"
+    links:
+      - mongo
+      - redis
+    environment:
+      GO_ENVIRONMENT: "production"
+      MONGO_USER: "bluca"
+      MONGO_PWD: "bluca"
+      MONGO_HOST: "mongo"
+      MONGO_PORT: "27017"
+      REDIS_ADDR: "redis:6379"
+      REDIS_PWD: ""
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    volumes:
+      - mongodb_data_container:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bluca
+      MONGO_INITDB_ROOT_PASSWORD: bluca
+      MONGO_INITDB_DATABASE: test
+
+volumes:
+  mongodb_data_container:
