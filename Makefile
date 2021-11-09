@@ -11,4 +11,4 @@ build:
 	docker build -t urlshortner .
 
 test:
-	go test ./*/*
+	go test ./...
