@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Build(dep *Dependencies) *http.Server {
+func Build(dep *Dependencies) *http.ServeMux {
 	// use cases
 	shorterUseCase := shortener.UseCaseURLShortener{
 		ShortURLRepo: dep.ShortURLRepo,
@@ -21,8 +21,5 @@ func Build(dep *Dependencies) *http.Server {
 	sm.HandleFunc("/register", shortURLHandler.HandleRegistry())
 	sm.HandleFunc("/", shortURLHandler.HandleRedirect())
 
-	return &http.Server{
-		Addr:    ":8080",
-		Handler: sm,
-	}
+	return sm
 }
